@@ -10,7 +10,12 @@
     $('.carousel.carousel-slider').carousel({
     fullWidth: true,
     indicators: true
+    
   });
+
+  $(document).ready(function() {
+        $('select').material_select();
+    });
 </script>
 <?php if(isset($_SESSION['autenticado'])):?>
   <footer class="page-footer blue">
@@ -37,7 +42,7 @@
             <div class="footer-copyright">
               <div class="container">
               © Chaveiro Pão de açucar
-              <a class="grey-text text-lighten-4 right" href="#!"><small>Design e Desenvolvimento por Pablo Nicolas & <b>Margot Gonçalves</b></small></a>
+              <a class="grey-text text-lighten-4 right" href="#!"><small>Design e Desenvolvimento por Pablo Nicolas & <b>Margot Gonçalves</b></a></small>
               </div>
             </div>
           </footer>

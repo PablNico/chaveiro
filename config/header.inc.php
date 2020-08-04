@@ -26,7 +26,7 @@
         function getValor(valor)
         {
             $("#endereco").html("<option value='0'>Carregando...</option>");
-                $("#endereco").load("../database/enderecos/optionEndereco.php", {cliente:valor})
+            $("#endereco").load("../database/enderecos/optionEndereco.php", {cliente:valor})
         }
     </script>
 </head>

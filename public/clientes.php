@@ -1,12 +1,11 @@
 <?php
-require_once "../config/header.inc.php"; 
-?>
-<?php 
+    require_once "../config/header.inc.php"; 
     if (!isset($_SESSION['autenticado'])):
         $destino = header("Location: login.php");
     else:
 ?>
     <div class="row container">
+    <!-- Div aletar -->
         <div class="col s12">
             <?php 
                             if (isset($_SESSION['sucesso'])) 
@@ -24,6 +23,7 @@ require_once "../config/header.inc.php";
                                 echo "</p>";
                             }
             ?>
+    <!-- Div form -->
             <div class="card">
 
                 <div class="card-action">
@@ -32,27 +32,23 @@ require_once "../config/header.inc.php";
 
                 <div class="card-content">
                 <?php 
-                        if (isset($_SESSION['sucesso'])) 
+                        if (!isset($_SESSION['tipoCliente']) or isset($_GET['recomecar']) ) 
                         {
-                            echo "<p class='center green lighten-2 white-text' style='border-radius:20px; padding:10px'>"; 
-                                echo $_SESSION['sucesso'];
-                                unset($_SESSION['sucesso']);
-                            echo "</p>";
+                            echo "<h5 class='light'>Selecione o tipo de cliente</h5>";
+                            require_once "../forms/form-seleciona-cliente.php"; 
                         }
-                        elseif (isset($_SESSION['erro'])) 
+                        else
                         {
-                            echo "<p class='center red lighten-2 white-text' style='border-radius:20px; padding:10px'>"; 
-                                echo $_SESSION['erro'];
-                                unset($_SESSION['erro']);
-                            echo "</p>";
+                            require_once "../forms/form-add-cliente.php"; 
                         }
-                        require_once "../forms/form-add-cliente.php"; 
+
+                        
                     ?>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row container">
+    <!-- <div class="row container">
         <div class="col s12">
             <div class="card">
                 <div class="card-action">
@@ -77,7 +73,7 @@ require_once "../config/header.inc.php";
             </div>
 
         </div>
-    </div>
+    </div> -->
 <?php 
             endif;
             require_once "../config/footer.inc.php"; 

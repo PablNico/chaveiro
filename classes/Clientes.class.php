@@ -167,6 +167,12 @@
                     echo "<option value='{$values['id']}'>{$values['nome']}</option>";
                 }
             }
+        
+            public function tipoCliente($tipo)
+            {
+                $_SESSION['tipoCliente'] = $tipo;
+                $destino = header("Location: ../../public/clientes.php");
+            }
 
         //Interface
 
