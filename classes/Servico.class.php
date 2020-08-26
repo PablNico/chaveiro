@@ -434,7 +434,7 @@
                                 clientes.nome
                         FROM `servicos` JOIN clientes 
                         ON servicos.cliente = clientes.id
-                        WHERE usuario = :id AND cancelado = 0 AND finalizado = 0";
+                        WHERE usuario = :id AND status = 1";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(":id", $_id);

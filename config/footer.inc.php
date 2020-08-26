@@ -7,12 +7,18 @@
     $(document).ready(function(){});
     $('.dropdown-trigger').dropdown();
     $(document).ready(function(){$('select').formSelect();});
-    $('.carousel.carousel-slider').carousel({
-    fullWidth: true,
-    indicators: true
-    
-  });
+    $('.carousel.carousel-slider').carousel
+    ({
 
+    }, setTimeout(autoplay, 4500));
+   
+    function autoplay() 
+    {
+      $('.carousel').carousel('next');
+      setTimeout(autoplay, 10500);
+    }
+
+  M.AutoInit();
   $(document).ready(function() {
         $('select').material_select();
     });
@@ -21,14 +27,18 @@
   <footer class="page-footer blue">
             <div class="container">
               <div class="row">
-                <div class="col l6 s12">
+                
+                <div class="col l4 s12">
                   <h5 class="white-text">Chaveiro Pão de açucar</h5>
                   <p class="grey-text text-lighten-4">
                     Av. Brasil, 3075 - Av. Brasil, 3660 <br>
                     Balneário Camboriú, SC - Brasil <br>
                     chaveiropaodeacucar24hs@hotmail.com</p>
                 </div>
-                <div class="col l4 offset-l2 s12">
+                <div class="col l4 s4">
+                  <img src="../img/chaveiro-logo.png">
+                </div>
+                <div class="col l4 s4">
                   <h5 class="white-text">Links úteis</h5>
                   <ul>
                     <li><a class="grey-text text-lighten-3" href="#!"><i class="fa fa-users" aria-hidden="true"></i> Sobre nós</a></li>
@@ -42,7 +52,7 @@
             <div class="footer-copyright">
               <div class="container">
               © Chaveiro Pão de açucar
-              <a class="grey-text text-lighten-4 right" href="#!"><small>Design e Desenvolvimento por Pablo Nicolas & <b>Margot Gonçalves</b></a></small>
+              <a class="grey-text text-lighten-4 right" href="#!"><small>Design e Desenvolvimento por <b>Pablo Nicolas</b> & <b>Margot Gonçalves</b></a></small>
               </div>
             </div>
           </footer>

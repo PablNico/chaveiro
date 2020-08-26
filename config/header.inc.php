@@ -34,22 +34,23 @@
   <?php if(isset($_SESSION['autenticado'])):?>
     <nav class="blue ">
         <div class="nav-wrapper">
-            <a href="home.php" class="brand-logo light">&nbsp CHAVEIRO</a>
+            
+            <a href="home.php" class="brand-logo light left">&nbsp&nbsp<img src="../img/chaveiro-logo.png" width="40px"></a>
             <a class='red right' href='../database/usuario/logout.php' style="padding: 0px 20px 0px 20px;">SAIR</a>
             <h5 class="light right">
               <?= "Bem vindo, {$_SESSION['username']}&nbsp&nbsp"?> 
             </h5>          
         </div>
     </nav>
-    <div class="indigo center-align" style="margin-bottom: 15px;">
+    <!-- <div class="indigo center-align" style="margin-bottom: 15px;">
       <span style="font-size: 15px; font-weight: 450; color: white">
-        <!-- <b> -->
+  
          •<a href="#" class="waves-effect waves-teal btn-flat white-text">Consultar Serviço</a>•
           <a href="#" class="waves-effect waves-teal btn-flat white-text">Consultar Cliente</a>•
           <a href="#" class="waves-effect waves-teal btn-flat white-text">Consultar Produto</a>•
-        <!-- </b> -->
+      
 
       </span>
-    </div>
+    </div> -->
   <?php endif;?>
 

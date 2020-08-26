@@ -42,7 +42,7 @@
 
             <!-- Input Nome responsável -->
             <div class="input-field col s12 l6">
-                <input type="text" name="nome" id="nome" maxlength="255" required autofocus>
+                <input type="text" name="nome" id="nome" maxlength="255" required>
                 <label for="nome">Digite o nome do responsável</label>
             </div>
 
@@ -59,7 +59,7 @@
             </div>
 
             <!-- Input e-mail -->
-            <div class="input-field col s12 l6">
+            <div class="input-field col s12 l12">
                 <input type="email" name="email" id="email" maxlength="255" required>
                 <label for="email">Digite o E-mail do cliente</label>
             </div>
