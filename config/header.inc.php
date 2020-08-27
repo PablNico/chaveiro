@@ -32,25 +32,58 @@
 </head>
 <body>
   <?php if(isset($_SESSION['autenticado'])):?>
-    <nav class="blue ">
-        <div class="nav-wrapper">
+    <nav class="blue">
+        <a href="home.php" class="brand-logo light left">&nbspCHAVEIRO</a>         
+        <a class='red right' href='../database/usuario/logout.php' style="padding: 0px 20px 0px 20px;">SAIR</a>
+        <h5 class="light right">
+            <?= "Bem vindo, {$_SESSION['username']}&nbsp&nbsp"?> 
+        </h5>          
+
             
-            <a href="home.php" class="brand-logo light left">&nbsp&nbsp<img src="../img/chaveiro-logo.png" width="40px"></a>
-            <a class='red right' href='../database/usuario/logout.php' style="padding: 0px 20px 0px 20px;">SAIR</a>
-            <h5 class="light right">
-              <?= "Bem vindo, {$_SESSION['username']}&nbsp&nbsp"?> 
-            </h5>          
+    </nav>
+    <nav class="blue darken-1 center-align">
+        <div class="nav-wrapper">
+            <!-- Trigger menu dropdown -->
+                <ul class="center-align" style="margin-left: 30%;">
+                    <li><a class="dropdown-trigger" href="#!" data-target="clientes">Clientes<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="servicos">Serviços<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="produtos">Produtos<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="funcionarios">Funcionarios<i class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
+            <!-- Fim Trigger menu dropdown -->
+            
+            <!-- Estrutura dropdown -->
+                <!-- Dropdown Clientes -->
+                    <ul id="clientes" class="dropdown-content">
+                        <li><a href="#!">Cadastrar (CPF)</a></li>
+                        <li><a href="#!">Cadastrar (CNPJ)</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">Consultar</a></li>
+                    </ul>
+
+                <!-- Dropdown Serviços -->
+                    <ul id="servicos" class="dropdown-content">
+                        <li><a href="#!">Novo Serviço</a></li>
+                        <li><a href="#!">Consultar</a></li>
+                    </ul>
+
+                <!-- Dropdown Serviços -->
+                    <ul id="produtos" class="dropdown-content">
+                        <li><a href="#!">Novo Produto</a></li>
+                        <li><a href="#!">Consultar</a></li>
+                        <li><a href="#!">Abastecer estoque</a></li>
+                    </ul>
+                    
+                <!-- Dropdown Funcionarios -->
+                    <ul id="funcionarios" class="dropdown-content">
+                        <li><a href="#!">Novo Funcionário (Normal)</a></li>
+                        <li><a href="#!">Novo Funcionário (Administrador)</a></li>
+                        <li><a href="#!">Consultar</a></li>
+                    </ul>
+
+            <!-- Fim Estrutura dropdown -->
+
         </div>
     </nav>
-    <!-- <div class="indigo center-align" style="margin-bottom: 15px;">
-      <span style="font-size: 15px; font-weight: 450; color: white">
-  
-         •<a href="#" class="waves-effect waves-teal btn-flat white-text">Consultar Serviço</a>•
-          <a href="#" class="waves-effect waves-teal btn-flat white-text">Consultar Cliente</a>•
-          <a href="#" class="waves-effect waves-teal btn-flat white-text">Consultar Produto</a>•
-      
-
-      </span>
-    </div> -->
   <?php endif;?>
 

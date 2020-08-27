@@ -12,7 +12,7 @@
 <!-- Fim Include Check -->
 
 <!-- main Container -->
-    <div class="row container center-align">,
+    <div class="row">,
 
         <!-- Mensagens ao logar -->
             <?php
@@ -92,11 +92,11 @@
                         <!-- Ações do sistema -->
                             <ul class="row collapsible">
                                 <!-- Collapse Serviços -->
-                                    <li class="col s6">
+                                    <li class="col s12">
                                         <div class="collapsible-header red white-text">
                                             <i class="material-icons">filter_drama</i>
                                             Serviços
-                                            <span class="badge white-text">2 Opções</span>
+                                            <span class="badge white-text">2</span>
                                         </div>
                                         <div class="collapsible-body">
                                             <a href="#" class="btn" >Novo Serviço</a>
@@ -106,11 +106,11 @@
                                 <!-- Fim Collapse Serviços -->
 
                                 <!-- Collapse Clientes -->
-                                    <li class="col s6">
+                                    <li class="col s12">
                                         <div class="collapsible-header">
                                             <i class="material-icons">filter_drama</i>
                                             Clientes
-                                            <span class="badge">3 Opções</span>
+                                            <span class="badge">3</span>
                                         </div>
                                         <div class="collapsible-body">
                                             <a href="#" class="btn">Novo Cliente (CPF)</a>
@@ -121,11 +121,11 @@
                                 <!-- Fim COllapse Clientes -->
                                 
                                 <!-- Collapse Produtos -->
-                                    <li class="col s6">
+                                    <li class="col s12">
                                         <div class="collapsible-header">
                                             <i class="material-icons">filter_drama</i>
                                             Produtos
-                                            <span class="badge">2 Opções</span>
+                                            <span class="badge">2</span>
                                         </div>
                                         <div class="collapsible-body">
                                             <a href="#" class="btn">Novo Produto</a>
@@ -136,11 +136,11 @@
                                 <!-- Fim Collapse Produtos -->
 
                                 <!-- Collapse Funcionários (Admin) -->
-                                    <li class="col s6">
+                                    <li class="col s12">
                                         <div class="collapsible-header">
                                             <i class="material-icons">filter_drama</i>
                                             Funcionários (Admin)
-                                            <span class="badge">3 Opções</span>
+                                            <span class="badge">3</span>
                                         </div>
                                         <div class="collapsible-body">
                                             <a href="#" class="btn-small">Novo Funcionário (Normal)</a>
