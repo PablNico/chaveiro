@@ -12,7 +12,9 @@
                 <h5 class="light">Cadastrar Endereço</h5>
             </div>
             <div class="card-content">
-                <?php require_once "../forms/form-add-endereco.php"; ?>
+                <?php 
+                    $cliente = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_URL);
+                    require_once "../forms/form-add-endereco.php"; ?>
             </div>
         </div>
     </div>

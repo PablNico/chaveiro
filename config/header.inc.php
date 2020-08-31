@@ -55,30 +55,30 @@
             <!-- Estrutura dropdown -->
                 <!-- Dropdown Clientes -->
                     <ul id="clientes" class="dropdown-content">
-                        <li><a href="#!">Cadastrar (CPF)</a></li>
-                        <li><a href="#!">Cadastrar (CNPJ)</a></li>
+                        <li><a href="clientes.php?CPF">Cadastrar (CPF)</a></li>
+                        <li><a href="clientes.php?CNPJ">Cadastrar (CNPJ)</a></li>
                         <li class="divider"></li>
-                        <li><a href="#!">Consultar</a></li>
+                        <li><a href="consulta-cliente.php">Consultar</a></li>
                     </ul>
 
                 <!-- Dropdown Serviços -->
                     <ul id="servicos" class="dropdown-content">
-                        <li><a href="#!">Novo Serviço</a></li>
-                        <li><a href="#!">Consultar</a></li>
+                        <li><a href="servico.php">Novo Serviço</a></li>
+                        <li><a href="consulta-servicos.php">Consultar</a></li>
                     </ul>
 
-                <!-- Dropdown Serviços -->
+                <!-- Dropdown Produtos -->
                     <ul id="produtos" class="dropdown-content">
-                        <li><a href="#!">Novo Produto</a></li>
-                        <li><a href="#!">Consultar</a></li>
+                        <li><a href="produtos.php">Novo Produto</a></li>
+                        <li><a href="consulta-produtos.php">Consultar</a></li>
                         <li><a href="#!">Abastecer estoque</a></li>
                     </ul>
                     
                 <!-- Dropdown Funcionarios -->
                     <ul id="funcionarios" class="dropdown-content">
-                        <li><a href="#!">Novo Funcionário (Normal)</a></li>
-                        <li><a href="#!">Novo Funcionário (Administrador)</a></li>
-                        <li><a href="#!">Consultar</a></li>
+                        <li><a href="usuario.php?tipo=1">Novo Funcionário (Normal)</a></li>
+                        <li><a href="usuario.php?tipo=2">Novo Funcionário (Administrador)</a></li>
+                        <li><a href="consulta-usuario.php">Consultar</a></li>
                     </ul>
 
             <!-- Fim Estrutura dropdown -->

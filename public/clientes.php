@@ -32,15 +32,25 @@
 
                 <div class="card-content">
                 <?php 
-                        if (!isset($_SESSION['tipoCliente']) or isset($_GET['recomecar']) ) 
-                        {
-                            echo "<h5 class='light'>Selecione o tipo de cliente</h5>";
-                            require_once "../forms/form-seleciona-cliente.php"; 
-                        }
-                        else
-                        {
-                            require_once "../forms/form-add-cliente.php"; 
-                        }
+                    if(isset($_GET['CPF']))
+                    {
+                        $_SESSION['tipoCliente'] = "pessoaFisica";
+                        require_once "../forms/form-add-cliente.php"; 
+                    }
+                    elseif(isset($_GET['CNPJ']))
+                    {
+                        $_SESSION['tipoCliente'] = "pessoaJuridica";
+                        require_once "../forms/form-add-cliente.php"; 
+                    }
+                    elseif (!isset($_SESSION['tipoCliente']) or isset($_GET['recomecar']) ) 
+                    {
+                        echo "<h5 class='light'>Selecione o tipo de cliente</h5>";
+                        require_once "../forms/form-seleciona-tipoCliente.php"; 
+                    }
+                    else
+                    {
+                        require_once "../forms/form-add-cliente.php"; 
+                    }
 
                         
                     ?>

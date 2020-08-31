@@ -16,25 +16,26 @@
             {
                 return $this->descricao;
             }
+
+            public function getStatus()
+            {
+                    return $this->status;
+            }
+
+            public function getPrioridade()
+            {
+                    return $this->prioridade;
+            }
+    
             public function getDataInicio()
             {
                 return $this->dataInicio;
             }
-            public function getValorTotal()
+
+            
+            public function getDataFim()
             {
-                return $this->valorTotal;
-            }
-            public function getValorPago()
-            {
-                            return $this->valorPago;
-            }
-            public function getFinalizado()
-            {
-                            return $this->finalizado;
-            }
-            public function getCancelado()
-            {
-                            return $this->cancelado;
+                return $this->dataFim;
             }
             
             public function getUsuario()
@@ -46,6 +47,7 @@
             {
                             return $this->cliente;
             }
+
             public function getEndereco()
             {
                             return $this->endereco;
@@ -66,7 +68,22 @@
                 
                 return $this;
             }
+
+              
+            public function setStatus($status)
+            {
+                    $this->status = $status;
+    
+                    return $this;
+            }
             
+            public function setPrioridade($prioridade)
+            {
+                $this->prioridade = $prioridade;
+
+                return $this;
+            }
+
             public function setDataInicio($dataInicio)
             {
                 $this->dataInicio = $dataInicio;
@@ -74,33 +91,10 @@
                 return $this;
             }
             
-            public function setValorTotal($valorTotal)
+            public function setDataFim($dataFim)
             {
-                $this->valorTotal = $valorTotal;
-                
-                return $this;
-            }
-            
-            public function setValorPago($valorPago)
-            {
-                $this->valorPago = $valorPago;
-                
-                return $this;
-            }
-            
-            
-            public function setFinalizado($finalizado)
-            {
-                $this->finalizado = $finalizado;
-                
-                return $this;
-            }
-            
-            
-            public function setCancelado($cancelado)
-            {
-                $this->cancelado = $cancelado;
-                
+                $this->dataFim = $dataFim;
+
                 return $this;
             }
 
@@ -198,13 +192,15 @@
             }
 
         //Específicios
-            public function dadosDoFormulario($descricao, $dataInicio, $usuario, $cliente, $endereco)
+            public function dadosDoFormulario($descricao, $status, $prioridade, $dataInicio, $usuario, $cliente, $endereco)
             {
                 $this->setDescricao($descricao);
+                $this->setStatus($status);
+                $this->setPrioridade($prioridade);
                 $this->setDataInicio($dataInicio);
+                $this->setUsuario($usuario);
                 $this->setCliente($cliente);
                 $this->setEndereco($endereco);
-                $this->setUsuario($usuario);
             }
 
             public function dadosDaTabela()
@@ -494,13 +490,64 @@
                 }
             }
 
+    
+  
 
-
-            
 
 } 
+
+
+
+// public function getValorTotal()
+// {
+//     return $this->valorTotal;
+// }
+
+// public function getValorPago()
+// {
+//                 return $this->valorPago;
+// }
+
+// public function getFinalizado()
+// {
+//                 return $this->finalizado;
+// }
+
+// public function getCancelado()
+// {
+//                 return $this->cancelado;
+// }
+
+// public function setValorTotal($valorTotal)
+// {
+//     $this->valorTotal = $valorTotal;
+    
+//     return $this;
+// }
+
+// public function setValorPago($valorPago)
+// {
+//     $this->valorPago = $valorPago;
+    
+//     return $this;
+// }
+
+
+// public function setFinalizado($finalizado)
+// {
+//     $this->finalizado = $finalizado;
+    
+//     return $this;
+// }
+
+
+// public function setCancelado($cancelado)
+// {
+//     $this->cancelado = $cancelado;
+    
+//     return $this;
+// }
 ?>
-                
                 
                 
                 

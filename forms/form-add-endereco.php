@@ -1,16 +1,24 @@
 
 <form action="../database/enderecos/create.php" class="row" method="post">
 <div class="input-field col s6">
-    <input type="text" name="rua" id="rua" required autofocus>
-    <label for="rua">Digite o nome da rua</label>
+    <input type="text" name="logradouro" id="logradouro" required autofocus>
+    <label for="logradouro">Digite o o logradouro (Rua, Avenida...)</label>
 </div>
 <div class="input-field col s6">
-    <input type="number" name="numero" id="numero" required>
-    <label for="numero">Digite o número da casa</label>
+    <input type="text" name="nome" id="nome" required >
+    <label for="nome">Digite o nome da rua</label>
+</div>
+<div class="input-field col s6">
+    <input type="number" name="numero" id="numero">
+    <label for="numero">Digite o número da casa (Opcional)</label>
+</div>
+<div class="input-field col s6">
+    <input type="text" name="edificio" id="edificio">
+    <label for="edificio">Digite o nome do edifício ou condomínio (Opcional)</label>
 </div>
 <div class="input-field col s12">
-    <input type="text" name="complemento" id="complemento" required>
-    <label for="complemento">Digite o complemento</label>
+    <input type="text" name="complemento" id="complemento">
+    <label for="complemento">Digite o complemento (Opcional)</label>
 </div>
 <div class="input-field col s8">
     <input type="text" name="cidade" id="cidade" required>
@@ -20,10 +28,7 @@
     <?php require_once "../database/enderecos/optionUf.php"; ?>
 </div>
 
-<div class="input-field col s12">
-    <?php require_once "../database/clientes/optionCliente.php"; ?>
-</div>
-
+<input type="hidden" name="cliente" value="<?php echo $cliente?>">
 
 <div class="input-field col s12">
     <input type="submit" name="cadastrar" id="cadastrar" value="cadastrar" class="btn">

@@ -215,7 +215,7 @@
                     $this->setNome($values['nome']);
                     $this->setLogin($values['login']);
                     $this->setSenha($values['senha']);
-                    $this->setAdministrador($values['administrador']);
+                    $this->setAdministrador($values['tipoConta']);
 
                     $_id = $this->getId();
                     $_nome = $this->getNome();

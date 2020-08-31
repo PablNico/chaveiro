@@ -12,7 +12,7 @@
     $hora = filter_input(INPUT_POST, "hora", FILTER_SANITIZE_STRING);
     $usuario = filter_input(INPUT_POST, "funcionario", FILTER_SANITIZE_STRING);
     $cliente = filter_input(INPUT_POST, "cliente", FILTER_SANITIZE_SPECIAL_CHARS);
-    $endereco = filter_input(INPUT_POST, "endereco", FILTER_SANITIZE_SPECIAL_CHARS);
+    $endereco = filter_input(INPUT_POST, "endereco", FILTER_SANITIZE_STRING);
   
 
 
@@ -20,7 +20,7 @@
     $servico = new Servico;
 
     $dataInicio .= " {$hora}:00";
-    $servico->dadosDoFormulario($descricao, $dataInicio, $usuario, $cliente, $endereco);
+    $servico->dadosDoFormulario($descricao, $status, $prioridade, $dataInicio, $usuario, $cliente, $endereco);
     $servico->create();
 
 

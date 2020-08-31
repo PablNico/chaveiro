@@ -2,7 +2,7 @@
     require_once "crudProduto.php";
     class Produtos extends Connection implements crudProduto
     {
-        private $id, $nome, $estoque, $valor, $item;
+        private $id, $nome, $categoria, $estoque, $valor;
         
 
 
@@ -16,7 +16,12 @@
             {
                     return $this->nome;
             }
-            
+
+            public function getCategoria()
+            {
+                    return $this->categoria;
+            }
+
             public function getEstoque()
             {
                     return $this->estoque;
@@ -25,10 +30,6 @@
             public function getValor()
             {
                     return $this->valor;
-            }
-            public function getItem()
-            {
-                    return $this->item;
             }
         
         //Setters
@@ -48,6 +49,12 @@
                     return $this;
             }
 
+            public function setCategoria($categoria)
+            {
+                    $this->categoria = $categoria;
+    
+                    return $this;
+            }
             
         
     
@@ -68,54 +75,51 @@
                     return $this;
             }
 
-            
-            
-    
-            public function setItem($item)
-            {
-                    $this->item = $item;
 
-                    return $this;
-            }
         //Interface
             public function create()
             {
                 $conn = $this->connect();
 
                 $nome = $this->getNome();
+                $categoria = $this->getCategoria();
                 $estoque = $this->getEstoque();
                 $valor = $this->getValor();
-                $item = $this->getItem();
 
                 $sql = "INSERT INTO produto VALUES 
-                (DEFAULT, :nome, :estoque, :valor, 1)";
+                (DEFAULT, :nome, :categoria, :estoque, :valor)";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(":nome", $nome);
+                $stmt->bindParam(":categoria", $categoria);
                 $stmt->bindParam(":estoque", $estoque);
                 $stmt->bindParam(":valor", $valor);
-                $stmt->bindParam(":item", $item);
 
                 if($stmt->execute())
                 {
                         $_SESSION["sucesso"] = "Produto cadastrado com sucesso!";
-                        $destino = header("Location: produto.php");
+                        $destino = header("Location: ../../public/consulta-produtos.php");
                 }
                 else
                 {
                         $_SESSION["erro"] = "Erro ao cadastrar produto!";
-                        $destino = header("Location: produto.php");    
+                        $destino = header("Location: ../../public/consulta-produtos.php");    
                 }
 
             }
         
-            public function read()
+            public function read($search)
             {
                 $conn = $this->connect();
 
-                $sql = "SELECT * FROM produto";
+                $search = "%{$search}%";
+
+                $sql = "SELECT * FROM produto WHERE 
+                        (nome LIKE :search) OR
+                        (categoria LIKE :search)";
 
                 $stmt = $conn->prepare($sql);
+                $stmt->bindParam(":search", $search);
                 $stmt->execute();
 
                 $result = $stmt->fetchAll();
@@ -123,33 +127,39 @@
                 foreach ($result as $values) {
                         $this->setId($values['id']);
                         $this->setNome($values['nome']);
+                        $this->setCategoria($values['categoria']);
                         $this->setEstoque($values['estoque']);
                         $this->setValor($values['valor']);
 
 
                         $id = $this->getId();
                         $nome = $this->getNome();
+                        $categoria = $this->getCategoria();
                         $estoque = $this->getEstoque();
                         $valor = $this->getValor();
-                        $item = $this->getItem();
+
 
                         echo "<tr>
                                 <td>{$id}</td>
                                 <td>{$nome}</td>
+                                <td>{$categoria}</td>
                                 <td>{$estoque}</td>
                                 <td>{$valor}</td>
                                 <td>
-                                        <a href='edit-produto.php?id={$id}'><i class='material-icons left'>edit</i>Editar</a>
+                                        <a class='btn-floating btn-small waves-effect waves-light blue' href='edit-produto.php?id={$id}'><i class='material-icons left'>edit</i>Editar</a>
                                 </td>
                                 <td>
-                                        <a href='../database/produtos/delete.php?id={$id}'><i class='material-icons left'>delete</i>Deletar</a>
+                                        <a class='btn-floating btn-small waves-effect waves-light blue' href='../database/produtos/delete.php?id={$id}'><i class='material-icons left'>delete</i>Deletar</a>
+                                </td>
+                                <td>
+                                        <a class='btn-floating btn-small waves-effect waves-light blue' href='../database/produtos/delete.php?id={$id}'><i class='material-icons left'>control_point</i>Deletar</a>
                                 </td>
                             </tr>";
                 }
 
             }
 
-            public function update($id, $nome, $estoque, $valor, $item)
+            public function update($id, $nome, $categoria, $estoque, $valor)
             {
                 
             }
@@ -160,9 +170,17 @@
             }
 
         //Específicos
-            public function dadosDoFormulario($nome, $estoque, $valor)
+            public function dadosDoFormulario($nome, $categoria, $estoque, $valor)
             {
-
+                $this->setNome($nome);
+                $this->setCategoria($categoria);
+                $this->setEstoque($estoque);
+                $this->setValor($valor);
             }
+
+  
+
+ 
+
     }
 ?>

@@ -2,7 +2,7 @@
     require_once 'crudEndereco.php';
     class Endereco extends Connection implements crudEndereco 
     {
-        private $id, $rua, $numero, $complemento, $cidade, $uf, $cliente;
+        private $id, $logradouro, $nome, $numero, $edificio, $complemento, $cidade, $uf, $cliente;
 
         //Getters
             public function getId()
@@ -10,14 +10,24 @@
                 return $this->id;
             }
             
-            public function getRua()
+            public function getLogradouro()
             {
-                return $this->rua;
+                    return $this->logradouro;
+            }
+    
+            public function getNome()
+            {
+                return $this->nome;
             }
             
             public function getNumero()
             {
                 return $this->numero;
+            }
+
+            public function getEdificio()
+            {
+                    return $this->edificio;
             }
             
             public function getComplemento()
@@ -47,11 +57,18 @@
                     $this->id = $id;
 
                     return $this;
-                }
+            }
 
-            public function setRua($rua)
+            public function setLogradouro($logradouro)
             {
-                    $this->rua = $rua;
+                    $this->logradouro = $logradouro;
+    
+                    return $this;
+            }
+
+            public function setNome($nome)
+            {
+                    $this->nome = $nome;
 
                     return $this;
             }
@@ -59,6 +76,13 @@
             public function setNumero($numero)
             {
                     $this->numero = $numero;
+
+                    return $this;
+            }
+                        
+            public function setEdificio($edificio)
+            {
+                    $this->edificio = $edificio;
 
                     return $this;
             }
@@ -91,24 +115,29 @@
 
                     return $this;
             }
+            
         //Interface
             public function create()
             {
                 $conn = $this->connect();
 
-                $rua = $this->getRua();
+                $logradouro = $this->getLogradouro();
+                $nome = $this->getNome();
                 $numero = $this->getNumero();
+                $edificio = $this->getEdificio();
                 $complemento = $this->getComplemento();
                 $cidade = $this->getCidade();
                 $uf = $this->getUf();
                 $cliente = $this->getCliente();
 
                 $sql = "INSERT INTO endereco VALUES
-                (DEFAULT, :rua, :numero, :complemento, :cidade, :uf, :cliente)";
+                (DEFAULT, :logradouro, :nome, :numero, :edificio, :complemento, :cidade, :uf, :cliente)";
 
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(":rua", $rua);
+                $stmt->bindParam(":logradouro", $logradouro);
+                $stmt->bindParam(":nome", $nome);
                 $stmt->bindParam(":numero", $numero);
+                $stmt->bindParam(":edificio", $edificio);
                 $stmt->bindParam(":complemento", $complemento);
                 $stmt->bindParam(":cidade", $cidade);
                 $stmt->bindParam(":uf", $uf);
@@ -118,12 +147,12 @@
                 {
                     $last_id = $conn->lastInsertId();
                     $_SESSION['sucesso'] = "Endereço cadastrado com sucesso!";
-                    $destino = header("Location: ../../public/add-servico.php?cliente={$cliente}&endereco={$last_id}");
+                    $destino = header("Location: ../../public/detalhes-cliente.php?id={$cliente}");
                 }
                 else
                 {
                     $_SESSION['erro'] = "Erro ao cadastrar endereço!";
-                    $destino = header("Location: ../../public/clientes.php");
+                    $destino = header("Location: ../../public/detalhes-cliente.php?id={$cliente}");
                 }
 
             }
@@ -135,7 +164,7 @@
                 $search = "%";
 
                 $sql = "SELECT  endereco.id,
-                                endereco.rua,
+                                endereco.nome,
                                 endereco.numero,
                                 endereco.complemento,
                                 endereco.cidade,
@@ -154,7 +183,7 @@
                 foreach ($result as $values) 
                 {
                     $this->setId($values['id']);
-                    $this->setRua($values['rua']);
+                    $this->setNome($values['nome']);
                     $this->setNumero($values['numero']);
                     $this->setComplemento($values['complemento']);
                     $this->setCidade($values['cidade']);
@@ -162,7 +191,7 @@
                     $this->setCliente($values['clienteId']);
 
                     $_id = $this->getId(); 
-                    $_rua = $this->getRua();
+                    $_nome = $this->getNome();
                     $_numero = $this->getNumero();
                     $_complemento = $this->getComplemento();
                     $_cidade = $this->getCidade();
@@ -172,7 +201,7 @@
 
                     echo "<tr>";
                         echo "<td>{$_id}</td>";
-                        echo "<td>{$_rua} - N° {$_numero} </td>";
+                        echo "<td>{$_nome} - N° {$_numero} </td>";
                         echo "<td>{$_cidade}"."-"."{$_uf}</td>";
                         echo "<td><a href='detalhes-cliente.php?id={$_clienteId}'>{$_clienteNome}</a></td>";
                         echo "<td>
@@ -186,28 +215,30 @@
 
             }
 
-            public function update($id, $rua, $numero, $complemento, $cidade, $uf, $cliente)
+            public function update($id, $nome, $numero, $edificio, $complemento, $cidade, $uf, $cliente)
             {
                 $conn = $this->connect();
 
                 $this->setId($id);
-                $this->setRua($rua);
+                $this->setNome($nome);
                 $this->setNumero($numero);
+                $this->setEdificio($edificio);
                 $this->setComplemento($complemento);
                 $this->setCidade($cidade);
                 $this->setUf($uf);
                 $this->setCliente($cliente);
 
                 $_id = $this->getId();
-                $_rua = $this->getRua();
+                $_nome = $this->getNome();
                 $_numero = $this->getNumero();
+                $_edificio = $this->getEdificio();
                 $_complemento = $this->getComplemento();
                 $_cidade = $this->getCidade();
                 $_uf = $this->getUf();
                 $_cliente = $this->getCliente();
 
                 $sql = "UPDATE endereco SET
-                        rua = :rua, 
+                        nome = :nome, 
                         numero = :numero, 
                         complemento = :complemento, 
                         cidade = :cidade, 
@@ -218,8 +249,9 @@
                 $stmt = $conn->prepare($sql);
 
                 $stmt->bindParam(":id", $_id);
-                $stmt->bindParam(":rua", $_rua);
+                $stmt->bindParam(":nome", $_nome);
                 $stmt->bindParam(":numero", $_numero);
+                $stmt->bindParam(":edificio", $_edificio);
                 $stmt->bindParam(":complemento", $_complemento);
                 $stmt->bindParam(":cidade", $_cidade);
                 $stmt->bindParam(":uf", $_uf);
@@ -253,22 +285,24 @@
                 if ($stmt->execute()) 
                 {
                     $last_id = $conn->lastInsertId();
-                    $_SESSION['sucesso'] = "Cliente cadastrado com sucesso!";
-                    $destino = header("Location: ../../public/endereco.php");
+                    $_SESSION['sucesso'] = "Endereço removido com sucesso!";
+                    $destino = header("Location: ../../public/consulta-cliente.php");
                 }
                 else
                 {
-                    $_SESSION['erro'] = "Cliente já cadastrado!";
-                    $destino = header("Location: ../../public/endereco.php");
+                    $_SESSION['erro'] = "Erro ao remover endereço!";
+                    $destino = header("Location: ../../public/consulta-cliente.php");
                 }
 
             }
 
         //Específicos
-            public function dadosDoFormulario($rua, $numero, $complemento, $cidade, $uf, $cliente)
+            public function dadosDoFormulario($logradouro, $nome, $numero, $edificio, $complemento, $cidade, $uf, $cliente)
             {
-                $this->setRua($rua);
+                $this->setLogradouro($logradouro);
+                $this->setNome($nome);
                 $this->setNumero($numero);
+                $this->setEdificio($edificio);
                 $this->setComplemento($complemento);
                 $this->setCidade($cidade);
                 $this->setUf($uf);
@@ -277,37 +311,14 @@
 
             public function dadosDaTabela($id)
             {
-                $conn = $this->connect();
-
-                $this->setId($id);
-                $_id = $this->getId();
-
-                $sql = "SELECT * FROM endereco WHERE id = :id";
-
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(":id", $_id);
-                $stmt->execute();
-
-                $result = $stmt->fetchAll();
-                
-                foreach ($result as $values) 
-                {
-                    require_once "../forms/form-edit-endereco.php";
-                }
-
-            }
-
-
-            public function optionEndereco($idCliente)
-            {
-                $this->setCliente($idCliente);
+                $this->setCliente($id);
                 $id = $this->getCliente();
 
                 $conn = $this->connect();
 
                 $sql = "SELECT endereco.id,
                                endereco.logradouro,
-                               endereco.nome AS nomeRua,
+                               endereco.nome AS nomenome,
                                endereco.numero,
                                endereco.edificio,
                                endereco.complemento,
@@ -327,9 +338,61 @@
                
                 foreach ($result as $values) 
                 {
-                    $nomeCompleto = "{$values['logradouro']} {$values['nomeRua']}, N° {$values['numero']},{$values['edificio']} {$values['complemento']} - {$values['cidade']} - {$values['uf']} ";
-                    echo "<option value='{$values['id']}'>{$nomeCompleto}</option>";
+                    $nomeCompleto = "{$values['logradouro']} {$values['nomenome']}, N° {$values['numero']},{$values['edificio']} {$values['complemento']} - {$values['cidade']} - {$values['uf']} ";
+                    echo "<tr>
+                            <td>
+                                {$values['id']}
+                            </td>
+                            <td>
+                                <span class='new badge blue' data-badge-caption=''>{$nomeCompleto}</span>
+                            </td>
+                            <td>
+                            <a class='btn-floating btn-small waves-effect blue' href='edit-endereco.php?id={$values['id']}'><i class='material-icons left'>edit</i>Editar</a>
+                            <a class='btn-floating btn-small waves-effect blue' href='../database/enderecos/delete.php?id={$values['id']}'><i class='material-icons left'>delete</i>Deletar</a>
+                            </td>
+                          </tr>";
                 }
+                // <a href='edit-endereco.php?id={$values['id']}'>{$nomeCompleto}</a>
+
+            }
+
+
+            public function optionEndereco($idCliente)
+            {
+                $this->setCliente($idCliente);
+                $id = $this->getCliente();
+
+                $conn = $this->connect();
+
+                $sql = "SELECT endereco.id,
+                               endereco.logradouro,
+                               endereco.nome AS nomenome,
+                               endereco.numero,
+                               endereco.edificio,
+                               endereco.complemento,
+                               endereco.cidade,
+                               endereco.uf,
+                               clientes.nome 
+                        FROM endereco JOIN clientes 
+                        ON clientes.id = endereco.cliente
+                        WHERE endereco.cliente = :cliente ";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(":cliente", $id);
+                $stmt->execute();
+
+                $result = $stmt->fetchAll();
+
+                echo "<select name='endereco' id=''>";
+                echo "<option value=''>Selecione o endereço do serviço</option>";
+                foreach ($result as $values) 
+                {
+                    $nomeCompleto = "{$values['logradouro']} {$values['nomenome']}, N° {$values['numero']},{$values['edificio']} {$values['complemento']} - {$values['cidade']} - {$values['uf']} ";
+                    echo "<option value='{$values['id']}'> {$nomeCompleto}</option>";
+                }
+                echo "</select>";
+                echo "<label for='endereco'></label>";
+                // <a href='edit-endereco.php?id={$values['id']}'>{$nomeCompleto}</a>
                 
 
 
@@ -354,7 +417,6 @@
                 
             }
 
-            
-            
+
     }
 ?>

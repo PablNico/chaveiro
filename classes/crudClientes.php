@@ -3,8 +3,8 @@
     interface crudClientes
     {
         public function create();
-        public function read();
-        public function update($id, $nome, $telefone, $cpf, $email, $observacoes);
+        public function read($search, $tipoCliente);
+        public function update($id, $nome, $nomeCondominio, $telefone, $cpf, $email, $observacoes, $tipoCliente);
         public function delete($id);
 
     }
