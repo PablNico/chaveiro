@@ -1,4 +1,4 @@
 <?php 
-    $destino = header("location: public/login.php")
-
+    // $destino = header("location: public/login.php")
+    print("teste");
 ?>
