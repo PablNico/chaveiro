@@ -13,9 +13,15 @@
 ?>
 
 <div class="row container">
+    <!-- Div aletar -->
+        <?php 
+            require_once "../config/alerta.inc.php";
+        ?>
+    <!-- Div form -->
     <div class="col s12">
         <div class="card">
             <div class="card-action">
+                <a href="consulta-servicos.php" class="btn red">Voltar</a>
                 <h5>Detalhes do serviço</h5>
             </div>
             <div class="card-content">

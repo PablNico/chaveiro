@@ -17,11 +17,10 @@
       }
 
     M.AutoInit();
-    $(document).ready(function() {
-          $('select').material_select();
-      });
+ 
   </script>
 <!-- Fim Scripts Jquery -->
+<script type="text/javascript" src="../scripts/ajax.js"></script>
 
 <!-- Inicio footer -->
   <footer class="page-footer blue">

@@ -4,7 +4,7 @@
     {
         public function create();
         public function read($search);
-        public function update($id, $descricao, $dataInicio, $valorTotal, $valorPago, $cliente, $idEndereco);
+        public function update($id, $descricao, $plantao, $dataInicio, $valorTotal, $valorPago, $cliente, $idEndereco);
         public function delete($id);
     }
     //$finalizado, $cancelado ficam para funções específicas

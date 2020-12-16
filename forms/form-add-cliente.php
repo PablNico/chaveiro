@@ -24,7 +24,7 @@
 
         <!-- Input opcional CPF -->
         <div class="input-field col s12 l6">
-            <input type="text" name="cpf" id="cpf" value="" maxlength="255">
+            <input type="text" name="cpf" id="cpf" value="" data-mask="000.000.000-42" maxlength="11">
             <label for="cpf">Digite o CPF do cliente (Opcional)</label>
         </div>
 
@@ -36,8 +36,8 @@
 
         <!-- Input observações -->
         <div class="input-field col s12">
-            <label for="observacoes">Digite as observações do cliente</label>
-            <textarea type="text" name="observacoes" id="observacoes" class="materialize-textarea" required></textarea>
+            <label for="observacoes">Digite as observações do cliente (Opcional)</label>
+            <textarea type="text" name="observacoes" id="observacoes" class="materialize-textarea"></textarea>
         </div>
         <input type="hidden" value="1" name="tipoCliente">
         
@@ -77,8 +77,8 @@
             
             <!-- Input Observações -->
             <div class="input-field col s12">
-                <label for="observacoes">Digite as observações do cliente</label>
-                <textarea type="text" name="observacoes" id="observacoes" class="materialize-textarea" required></textarea>
+                <label for="observacoes">Digite as observações do cliente (Opcional)</label>
+                <textarea type="text" name="observacoes" id="observacoes" class="materialize-textarea"></textarea>
             </div>
 
             <input type="hidden" value="2" name="tipoCliente"> 

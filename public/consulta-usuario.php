@@ -7,15 +7,20 @@
 
 <div class="row container">
     <div class="col s12">
+        <!-- Div aletar -->
+            <?php 
+                require_once "../config/alerta.inc.php";
+            ?>
+        <!-- Div form -->
         <div class="card">
             <div class="card-action">
-                <h5 class="">Usuários cadastrados</h5>
+                <h5 class="">Consulta usuários</h5>
             </div>
             <div class="card-content">
+                <?php require_once "../forms/form-consulta-usuario.php"?> 
                 <table class="striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Nome</th>
                             <th>Login</th>
                             <th>Senha</th>

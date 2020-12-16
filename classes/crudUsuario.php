@@ -3,7 +3,7 @@
     interface crudUsuario
     {
         public function create();
-        public function read();
+        public function read($search);
         public function update($id, $nome, $login, $senha, $administrador);
         public function delete($id);
     }

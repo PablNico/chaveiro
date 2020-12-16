@@ -11,6 +11,7 @@
                 <h5 class="light">Cadastrar Produto</h5>
             </div>
             <div class="card-content">
+                <?php $pasta = filter_input(INPUT_GET, "pasta", FILTER_SANITIZE_FULL_SPECIAL_CHARS)?>
                 <?php require_once "../forms/form-add-produto.php";?>
             </div>
         </div>

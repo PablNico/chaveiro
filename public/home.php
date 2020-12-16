@@ -12,17 +12,19 @@
 <!-- Fim Include Check -->
 
 <!-- main Container -->
-    <div class="row">,
+    <div class="row container">
 
         <!-- Mensagens ao logar -->
             <?php
-                if (isset($_SESSION['mensagem'])) 
-                {
-                    echo "<p class='center green darken-2 white-text' style='border-radius:20px; padding:10px'>"; 
-                        echo $_SESSION['mensagem'];
-                        unset($_SESSION['mensagem']);
-                    echo "</p>";
-                }
+                require_once "../config/alerta.inc.php";
+            ?>
+        <!-- Fim Mensagens Logar -->
+    </div>
+    <div class="row">
+
+        <!-- Mensagens ao logar -->
+            <?php
+                require_once "../config/alerta.inc.php";
             ?>
         <!-- Fim Mensagens Logar -->
 
@@ -89,69 +91,7 @@
                             </div>
                         <!-- Fim Banners -->
 
-                        <!-- Ações do sistema -->
-                            <ul class="row collapsible">
-                                <!-- Collapse Serviços -->
-                                    <li class="col s12">
-                                        <div class="collapsible-header red white-text">
-                                            <i class="material-icons">filter_drama</i>
-                                            Serviços
-                                            <span class="badge white-text">2</span>
-                                        </div>
-                                        <div class="collapsible-body">
-                                            <a href="#" class="btn" >Novo Serviço</a>
-                                            <a href="#" class="btn">Consultar Serviço</a>
-                                        </div>
-                                    </li>
-                                <!-- Fim Collapse Serviços -->
-
-                                <!-- Collapse Clientes -->
-                                    <li class="col s12">
-                                        <div class="collapsible-header">
-                                            <i class="material-icons">filter_drama</i>
-                                            Clientes
-                                            <span class="badge">3</span>
-                                        </div>
-                                        <div class="collapsible-body">
-                                            <a href="#" class="btn">Novo Cliente (CPF)</a>
-                                            <a href="#" class="btn">Novo Cliente (CNPJ)</a>
-                                            <a href="#" class="btn">Consultar Cliente</a>
-                                        </div>
-                                    </li>
-                                <!-- Fim COllapse Clientes -->
-                                
-                                <!-- Collapse Produtos -->
-                                    <li class="col s12">
-                                        <div class="collapsible-header">
-                                            <i class="material-icons">filter_drama</i>
-                                            Produtos
-                                            <span class="badge">2</span>
-                                        </div>
-                                        <div class="collapsible-body">
-                                            <a href="#" class="btn">Novo Produto</a>
-                                            <a href="#" class="btn">Consultar Produto</a>
-                                            <a href="#" class="btn">Abastecer estoque</a>
-                                        </div>
-                                    </li>
-                                <!-- Fim Collapse Produtos -->
-
-                                <!-- Collapse Funcionários (Admin) -->
-                                    <li class="col s12">
-                                        <div class="collapsible-header">
-                                            <i class="material-icons">filter_drama</i>
-                                            Funcionários (Admin)
-                                            <span class="badge">3</span>
-                                        </div>
-                                        <div class="collapsible-body">
-                                            <a href="#" class="btn-small">Novo Funcionário (Normal)</a>
-                                            <a href="#" class="btn-small">Novo Funcionário (Administrador)</a>
-                                            <a href="#" class="btn-small">Consultar funcionário</a>
-                                        </div>
-                                    </li>
-                                <!-- Fim Collapse Funcionários (Admin) -->
-                            </ul>
-                            
-                        <!-- Fim Ações do sistema -->
+                      
                     </div>
                 </div>
             </div>
@@ -166,10 +106,10 @@
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-action green darken-3 white-text">
-                        Meus Serviços (Em andamento)
+                       <i class="tiny material-icons">person</i> Meus Serviços (Em andamento)
                     </div>
                     <div class="card-content">
-                        <?= "Inserir Serviços em andamento"?> 
+                        <?php require_once "../database/servicos/meusServicos.php"; ?> 
                     </div>
                 </div>
             </div>
@@ -179,36 +119,36 @@
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-action yellow darken-4 white-text">
-                        Serviços Urgentes
+                       <i class="tiny material-icons">warning</i> Serviços Urgentes
                     </div>
                     <div class="card-content">
-                        <?= "Inserir Serviços Urgentes";?>
+                        <?php require_once "../database/servicos/servicosUrgentes.php"; ?>
                     </div>
                 </div>
             </div>
         <!-- Fim Serviços Urgentes -->
 
         <!-- Serviços nos Próximos dias -->
-            <div class="col s12 l6">
+            <!-- <div class="col s12 l6">
                 <div class="card">
                     <div class="card-action green darken-3 white-text">
-                        Serviços nos Próximos dias
+                       <i class="tiny material-icons">date_range</i> Serviços nos Próximos dias
                     </div>
                     <div class="card-content">
                         <?= "Inserir Serviços nos Próximos dias"?> 
                     </div>
                 </div>
-            </div>
+            </div> -->
         <!-- Fim Serviços nos Próximos dias -->
         
         <!-- Serviços disponíveis -->
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-action yellow darken-4 white-text">
-                        Serviços disponíveis
+                       <i class="tiny material-icons">notifications_active</i> Serviços disponíveis
                     </div>
                     <div class="card-content">
-                        <?= "Inserir Serviços Disponíveis"; ?>
+                        <?php require_once "../database/servicos/servicosAbertos.php"; ?>
                     </div>
                 </div>
             </div>
@@ -218,10 +158,10 @@
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-action blue darken-3 white-text">
-                        Serviços Finalizados (Pagamento Pendente)
+                       <i class="tiny material-icons">money_off</i> Serviços Finalizados (Pagamento Pendente)
                     </div>
                     <div class="card-content">
-                        <?= "Inserir Serviços finalizados"; ?>
+                        <?php require_once "../database/servicos/servicosFinalizados.php"; ?> 
                     </div>
                 </div>
             </div>
@@ -231,10 +171,10 @@
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-action red white-text">
-                        Serviços quitados
+                       <i class="tiny material-icons">attach_money</i> Serviços quitados
                     </div>
                     <div class="card-content">
-                        <?= "Inserir Serviços Quitados"; ?>
+                        <?php require_once "../database/servicos/servicosQuitados.php"; ?>
                     </div>
                 </div>
             </div>
@@ -244,10 +184,10 @@
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-action red white-text">
-                        Serviços Cancelados
+                       <i class="tiny material-icons">cancel</i> Serviços Cancelados
                     </div>
                     <div class="card-content">
-                        <?= "Inserir Serviços cancelados"; ?>
+                        <?php require_once "../database/servicos/servicosCancelados.php"; ?> 
                     </div>
                 </div>
             </div>

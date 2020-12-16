@@ -13,19 +13,50 @@
     </div>
     <div class="input-field col s12 ">    
         <span class="light">Usuário administrador?</span>
-        <p>
-        <label>
-            <input name="administrador" type="radio" value="1"  />
-            <span>Sim</span>
-        </label>
+        
+        <?php if (filter_input(INPUT_GET, "tipo", FILTER_SANITIZE_NUMBER_INT) == "1"):?>
+            <p>
+                <label>
+                    <input name="tipoConta" type="radio" value="1" checked />
+                    <span>Sim</span>
+                </label>
+            </p>
+            <p>
+            <label>
+                <input name="tipoConta" type="radio" value="0" />
+                <span>Não</span>
+            </label>
         </p>
-        <p>
-        <label>
-            <input name="administrador" type="radio" value="0" checked/>
-            <span>Não</span>
-        </label>
+        
+        <?php elseif (filter_input(INPUT_GET, "tipo", FILTER_SANITIZE_NUMBER_INT) == "0"):?>
+            <p>
+                <label>
+                    <input name="tipoConta" type="radio" value="1" />
+                    <span>Sim</span>
+                </label>
+            </p>
+            <p>
+            <label>
+                <input name="tipoConta" type="radio" value="0" checked/>
+                <span>Não</span>
+            </label>
         </p>
+        <?php else:?>
+            <p>
+                <label>
+                    <input name="tipoConta" type="radio" value="1" />
+                    <span>Sim</span>
+                </label>
+            </p>
+            <p>
+            <label>
+                <input name="tipoConta" type="radio" value="0" checked/>
+                <span>Não</span>
+            </label>
+        </p>
+        <?php endif; ?>
     </div>
+
     <div class="input-field col s12">
         <input type="submit" name="cadastrar" id="cadastrar" value="cadastrar" class="btn">
         <a href="usuario.php" type="reset" name="limpar" class="btn red">limpar</a>

@@ -156,7 +156,6 @@
                 $result = $stmt->fetchAll();
                 foreach ($result as $values) 
                 {
-                    echo "<blockquote class='light'>ID no Banco de dados: <span class='badge'>{$values['id']}</span></blockquote><hr>";
                     echo "<blockquote class='light'>Nome: <span class='badge'>{$values['nome']}</span></blockquote><hr>";
                     echo "<blockquote class='light'>Telefone: <span class='badge'>{$values['telefone']}</span></blockquote><hr>";
                     echo "<blockquote class='light'>CPF: <span class='badge'>{$values['cpf']}</span></blockquote><hr>";
@@ -171,22 +170,25 @@
             }
 
             //retorna os dados de todos os clientes em um option para o formulário forms/form-add-cliente.php
-            public function optionCliente()
+            public function optionCliente($search)
             {
+                $search .= "%"; 
                 $conn = $this->connect();
 
-                $sql = "SELECT * FROM clientes";
+                $sql = "SELECT * FROM clientes WHERE
+                (nome like :search) OR 
+                (nomeCondominio like :search)
+                OR (telefone like :search )
+                OR (email like :search) ";
 
                 $stmt = $conn->prepare($sql);
+                $stmt->bindParam(":search", $search);
                 $stmt->execute();
 
-                $result = $stmt->fetchAll();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                foreach ($result as $values) 
-                {
-                    echo "<option value='{$values['id']}'>{$values['nome']}</option>";
-                }
-                echo "</select>";
+                echo json_encode($result);
+                
             }
         
             public function tipoCliente($tipo)
@@ -226,18 +228,17 @@
                 if ($stmt->execute()) 
                 {
                     $_SESSION['sucesso'] = "Cliente cadastrado com sucesso!";
-                    $destino = header("Location: ../../public/clientes.php");
+                    $destino = header("Location: ../../public/endereco.php?id={$conn->lastInsertId()}");
                 }
                 else
                 {
                     $_SESSION['erro'] = "Cliente já cadastrado!";
-                    print_r($stmt->errorInfo());
-                    // $destino = header("Location: ../../public/clientes.php");
+                    $destino = header("Location: ../../public/clientes.php?recomecar=1");
                 }
 
             }
             
-            //Lê todos os clientes no BD
+            //Busca clientes no BD
             public function read($search, $tipoCliente)
             {
                 $conn = $this->connect();
@@ -276,20 +277,28 @@
                 {
                     $this->setId($value['id']);
                     $this->setNome($value['nome']);
+                    $this->setNomeCondominio($value['nomeCondominio']);
                     $this->setTelefone($value['telefone']);
                     $this->setEmail($value['email']);
                     $this->setTipoCliente($value['tipoCliente']);
 
                     $_id = $this->getId();
                     $_nome = $this->getNome();
+                    $_nomeCondomio = $this->getNomeCondominio();
                     $_telefone = $this->getTelefone();
                     $_email = $this->getEmail();
                     $_tipoCliente = $this->getTipoCliente();
                     
 
                     echo "<tr>";
-                        echo "<td>{$_id}</td>";
-                        echo "<td  class='badge' style='min-width:100px;'><a href='detalhes-cliente.php?id={$_id}'><span class='new badge blue' data-badge-caption=''>{$_nome}</span></td>";
+                        if($_tipoCliente == 1)
+                        {
+                            echo "<td  class='badge' style='min-width:100px;'><a href='detalhes-cliente.php?id={$_id}'><span class='new badge blue' data-badge-caption=''>{$_nome}</span></td>";
+                        }
+                        elseif($_tipoCliente == 2)
+                        {
+                            echo "<td  class='badge' style='min-width:100px;'><a href='detalhes-cliente.php?id={$_id}'><span class='new badge blue' data-badge-caption=''>Condomínio: {$_nomeCondomio}</span></td>";
+                        }
                         echo "<td>{$_email}</td>";
                         echo "<td style='min-width:150px;'>{$_telefone}</td>";
                         if($_tipoCliente == 1)
@@ -301,17 +310,15 @@
                             echo "<td>Pessoa Jurídica</td>";
                         }
                         echo "<td>
-                                <a class='btn-floating btn-small waves-effect blue' href='edit-client.php?id={$_id}'><i class='material-icons left'>edit</i>Editar</a>
+                                <a class='btn-floating btn-small waves-effect blue' href='edit-client.php?id={$_id}&tipo={$_tipoCliente}'><i class='material-icons left'>edit</i>Editar</a>
                              </td>";
                         echo "<td>
-                                <a class='btn-floating btn-small waves-effect blue' href='../database/clientes/delete.php?id={$_id}'><i class='material-icons left'>delete</i>Deletar</a>
+                                <a class='btn-floating btn-small waves-effect red' href='../database/clientes/delete.php?id={$_id}'><i class='material-icons left'>delete</i>Deletar</a>
                              </td>";
                         echo "<td>
-                                <a class='btn-floating btn-small waves-effect blue' href='endereco.php?id={$_id}'><i class='material-icons left'>add_location</i>Novo serviço</a>
+                                <a class='btn-floating btn-small waves-effect orange' href='endereco.php?id={$_id}'><i class='material-icons left'>add_location</i>Novo serviço</a>
                              </td>";
-                        echo "<td>
-                                <a class='btn-floating btn-small waves-effect blue' href='#'><i class='material-icons left'>contact_phone</i>Adicionar Endereço</a>
-                             </td>";
+                        
                     echo "</tr>";
                 }
             }
@@ -323,40 +330,53 @@
 
                 $this->setId($id);
                 $this->setNome($nome);
-                $this->setCpf($cpf);
+                $this->setNomeCondominio($nomeCondominio);
                 $this->setTelefone($telefone);
+                $this->setEmail($email);
+                $this->setCpf($cpf);
                 $this->setObservacoes($observacoes);
+                $this->setTipoCliente($tipoCliente);
 
                 $_id        = $this->getId();
                 $_nome        = $this->getNome();
-                $_cpf         = $this->getCpf();
+                $_nomeCondomio = $this->getNomeCondominio();
                 $_telefone    = $this->getTelefone();
+                $_email       = $this->getEmail();
+                $_cpf         = $this->getCpf();
                 $_observacoes = $this->getObservacoes();
+                $_tipoCliente = $this->getTipoCliente();
+
 
                 $sql = "UPDATE clientes SET
                         nome=:nome,
+                        nomeCondominio=:nomeCondomio,
                         telefone=:telefone,
+                        email=:email,
                         cpf=:cpf,
-                        observacoes=:observacoes
+                        observacoes=:observacoes,
+                        tipoCliente=:tipoCliente
                         WHERE id=:id";
 
                 $stmt = $conn->prepare($sql);
                 
-                $stmt->bindParam(":nome", $_nome);
-                $stmt->bindParam(":cpf", $_cpf);
-                $stmt->bindParam(":telefone", $_telefone);
-                $stmt->bindParam(":observacoes", $_observacoes);
                 $stmt->bindParam(":id", $_id);
+                $stmt->bindParam(":nome", $_nome);
+                $stmt->bindParam(":nomeCondomio", $_nomeCondomio);
+                $stmt->bindParam(":telefone", $_telefone);
+                $stmt->bindParam(":email", $_email);
+                $stmt->bindParam(":cpf", $_cpf);
+                $stmt->bindParam(":observacoes", $_observacoes);
+                $stmt->bindParam(":tipoCliente", $_tipoCliente);
                 
                 if ($stmt->execute())
                 {
                     $_SESSION['sucesso'] = "Atualizado com sucesso!";
-                    $destino = header("location: ../../public/clientes.php");
+                    $destino = header("location: ../../public/detalhes-cliente.php?id={$_id}");
                 }
                 else
                 {
-                    $_SESSION['erro'] = "Erro ao atualizar!";
-                    $destino = header("location: ../../public/clientes.php");
+                    $_SESSION['sucesso'] = "Erro ao atualizar!";
+                    $destino = header("location: ../../public/detalhes-cliente.php?id={$_id}");
                 }
                 
             }
@@ -377,12 +397,12 @@
                 if ($stmt->execute())
                 {
                     $_SESSION['sucesso'] = "Deletado com sucesso!";
-                    $destino = header("location: ../../public/clientes.php");
+                    $destino = header("location: ../../public/consulta-cliente.php");
                 }
                 else
                 {
-                    $_SESSION['erro'] = "Erro ao deletar!";
-                    $destino = header("location: ../../public/clientes.php");
+                    $_SESSION['erro'] = "Erro ao deletar! <br> Delete o endereço antes";
+                    $destino = header("location: ../../public/consulta-cliente.php");
                 }
 
             }

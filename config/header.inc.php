@@ -10,25 +10,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, nofollow">
+    
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <link rel="stylesheet" href="../materialize/css/materialize.min.css">
     <link rel="stylesheet" href="../materialize/css/materialize.min.css">
     <link rel="stylesheet" href="../materialize/css/style.css">
     <link rel="stylesheet" href="../materialize/font-awesome/css/font-awesome.min.css">
+    
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="../img/favicon.ico" type="image/x-icon"> 
             
     <title>Sistema Chaveiro</title>
-
-    <script type="text/javascript">
-        function getValor(valor)
-        {
-            $("#endereco").html("<option value='0'>Carregando...</option>");
-            $("#endereco").load("../database/enderecos/optionEndereco.php", {cliente:valor})
-        }
-    </script>
 </head>
 <body>
   <?php if(isset($_SESSION['autenticado'])):?>
@@ -45,14 +37,19 @@
         <div class="nav-wrapper">
             <!-- Trigger menu dropdown -->
                 <ul class="center-align" style="margin-left: 30%;">
+                    <li><a href="home.php"><i class="material-icons">home</i></a></li>
                     <li><a class="dropdown-trigger" href="#!" data-target="clientes">Clientes<i class="material-icons right">arrow_drop_down</i></a></li>
                     <li><a class="dropdown-trigger" href="#!" data-target="servicos">Serviços<i class="material-icons right">arrow_drop_down</i></a></li>
                     <li><a class="dropdown-trigger" href="#!" data-target="produtos">Produtos<i class="material-icons right">arrow_drop_down</i></a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="funcionarios">Funcionarios<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <?php if($_SESSION['autenticado'] == "admin"):?>
+                        <li><a class="dropdown-trigger" href="#!" data-target="funcionarios">Funcionarios<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <?php endif;?>    
+                        
                 </ul>
             <!-- Fim Trigger menu dropdown -->
             
             <!-- Estrutura dropdown -->
+
                 <!-- Dropdown Clientes -->
                     <ul id="clientes" class="dropdown-content">
                         <li><a href="clientes.php?CPF">Cadastrar (CPF)</a></li>
@@ -69,17 +66,18 @@
 
                 <!-- Dropdown Produtos -->
                     <ul id="produtos" class="dropdown-content">
-                        <li><a href="produtos.php">Novo Produto</a></li>
-                        <li><a href="consulta-produtos.php">Consultar</a></li>
-                        <li><a href="#!">Abastecer estoque</a></li>
+                        <li><a href="consulta-produtos.php?pasta=1">Consultar</a></li>
                     </ul>
                     
+
                 <!-- Dropdown Funcionarios -->
-                    <ul id="funcionarios" class="dropdown-content">
-                        <li><a href="usuario.php?tipo=1">Novo Funcionário (Normal)</a></li>
-                        <li><a href="usuario.php?tipo=2">Novo Funcionário (Administrador)</a></li>
-                        <li><a href="consulta-usuario.php">Consultar</a></li>
-                    </ul>
+                    <?php if($_SESSION['autenticado'] == "admin"):?>
+                        <ul id="funcionarios" class="dropdown-content">
+                            <li><a href="usuario.php?tipo=0">Novo Funcionário (Normal)</a></li>
+                            <li><a href="usuario.php?tipo=1">Novo Funcionário (Administrador)</a></li>
+                            <li><a href="consulta-usuario.php">Consultar</a></li>
+                        </ul>
+                    <?php endif; ?>
 
             <!-- Fim Estrutura dropdown -->
 

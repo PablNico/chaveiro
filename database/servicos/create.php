@@ -6,6 +6,7 @@
     require_once "../../classes/autoload.php";
 
     $descricao = filter_input(INPUT_POST, "descricao", FILTER_SANITIZE_SPECIAL_CHARS);
+    $plantao = filter_input(INPUT_POST, "plantao", FILTER_SANITIZE_SPECIAL_CHARS);
     $status = filter_input(INPUT_POST, "status", FILTER_SANITIZE_SPECIAL_CHARS);
     $prioridade = filter_input(INPUT_POST, "prioridade", FILTER_SANITIZE_SPECIAL_CHARS);
     $dataInicio = filter_input(INPUT_POST, "data", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -20,7 +21,7 @@
     $servico = new Servico;
 
     $dataInicio .= " {$hora}:00";
-    $servico->dadosDoFormulario($descricao, $status, $prioridade, $dataInicio, $usuario, $cliente, $endereco);
+    $servico->dadosDoFormulario($descricao, $plantao, $status, $prioridade, $dataInicio, $usuario, $cliente, $endereco);
     $servico->create();
 
 

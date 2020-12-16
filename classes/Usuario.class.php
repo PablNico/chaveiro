@@ -2,7 +2,7 @@
     require_once 'crudUsuario.php';
     class Usuario extends Connection implements crudUsuario
     {
-        private $id, $nome, $login, $senha, $administrador;
+        private $id, $nome, $login, $senha, $tipoConta;
         
         //Getters    
             public function getId()
@@ -26,9 +26,9 @@
                     return $this->senha;
             }
 
-            public function getAdministrador()
+            public function getTipoConta()
             {
-                    return $this->administrador;
+                    return $this->tipoConta;
             }
 
         //Setters
@@ -60,20 +60,20 @@
                 return $this;
             }
 
-            public function setAdministrador($administrador)
+            public function setTipoConta($tipoConta)
             {
-                    $this->administrador = $administrador;
+                    $this->tipoConta = $tipoConta;
     
                     return $this;
             }
         //Específicos
         
-            public function dadosDoFormulario($nome, $login, $senha, $administrador)
+            public function dadosDoFormulario($nome, $login, $senha, $tipoConta)
             {
                 $this->setNome($nome);
                 $this->setLogin($login);
                 $this->setSenha($senha);
-                $this->setAdministrador($administrador);
+                $this->setTipoConta($tipoConta);
             }
 
             public function dadosDaTabela($id)
@@ -98,24 +98,31 @@
 
             }
 
-            public function optionFuncionario()
+            public function optionFuncionario($search)
             {
+                $search .= "%";
                 $conn = $this->connect();
                 
-                $sql  = "SELECT * FROM usuario";
+                $sql  = "SELECT * FROM usuario WHERE nome LIKE :search";
                 $stmt = $conn->prepare($sql);
+                $stmt->bindParam(":search", $search);
                 $stmt->execute();
 
-                $result = $stmt->fetchAll();
-
-                echo "<option value='0' selected>Sem funcionário responsável</option>";
-                foreach($result as $values)
-                {
-                    echo "<option value='{$values['id']}'>{$values['nome']}</option>";
-                }
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                echo json_encode($result);
+                // echo "<select name='funcionario'>";
+                // echo "<option value='0' selected>Sem funcionário responsável</option>";
+                // foreach($result as $values)
+                // {
+                //     echo "<option value='{$values['id']}'>{$values['nome']}</option>";
+                // }
+                // echo "</select>";
+                // echo "<label for='funcionario'>Selecione o funcionário</label>";
 
 
             }
+
             public function login($login, $senha)
             {
                 $this->setLogin($login);
@@ -140,15 +147,15 @@
                     $values = $result[0];
                     $_SESSION['userId'] = $values['id'];
                     $_SESSION['username'] = $values['nome'];
-                    if ($values['administrador'] == 1) 
+                    if ($values['tipoConta'] == 1) 
                     {
                         $_SESSION['autenticado'] = "admin";
-                        $_SESSION['mensagem'] = "Logado como administrador!";
+                        $_SESSION['sucesso'] = "Logado como administrador!";
                     }
                     else
                     {
                         $_SESSION['autenticado'] = "normal";
-                        $_SESSION['mensagem'] = "Logado com sucesso!";
+                        $_SESSION['sucesso'] = "Logado com sucesso!";
                     }
                     $destino = header("Location: ../../public/home.php");
                 }
@@ -167,6 +174,19 @@
                 unset($_SESSION["autenticado"]);
                 $destino = header("location: ../../public/login.php");
             }
+
+
+            public function traduzAdmin($tipoConta)
+            {
+                if($tipoConta == 0)
+                {
+                    return "Não";
+                }
+                elseif($tipoConta == 1)
+                {
+                    return "Sim";
+                }
+            }
         //Interface
             public function create()
             {
@@ -175,36 +195,41 @@
                 $nome = $this->getNome();
                 $login = $this->getLogin();
                 $senha = $this->getSenha();
-                $administrador = $this->getAdministrador();
+                $tipoConta = $this->getTipoConta();
 
                 $sql = "INSERT INTO usuario VALUES
-                (DEFAULT, :nome, :login, :senha, :administrador)";
+                (DEFAULT, :nome, :login, :senha, :tipoConta)";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(":nome", $nome);
                 $stmt->bindParam(":login", $login);
                 $stmt->bindParam(":senha", $senha);
-                $stmt->bindParam(":administrador", $administrador);
+                $stmt->bindParam(":tipoConta", $tipoConta);
                 
                 if ($stmt->execute()) 
                 {
                     $_SESSION['sucesso'] = "Usuário cadastrado com sucesso!";
-                    $destino = header("Location: ../../public/usuario.php");
+                    $destino = header("Location: ../../public/consulta-usuario.php");
                 }
                 else
                 {
                     $_SESSION['erro'] = "Usuário já cadastrado!";
-                    $destino = header("Location: ../../public/usuario.php");
+                    $destino = header("Location: ../../public/consulta-usuario.php");
                 }
             }
 
-            public function read()
+            public function read($search)
             {
                 $conn = $this->connect();
 
-                $sql = "SELECT * FROM usuario";
+                $search = "%{$search}%";
+                $sql = "SELECT * FROM usuario WHERE 
+                (nome LIKE :search) OR
+                (login LIKE :search) OR
+                (tipoConta LIKE :search)";
 
                 $stmt = $conn->prepare($sql);
+                $stmt->bindParam(":search", $search);
                 $stmt->execute();
 
                 $result = $stmt->fetchAll();
@@ -215,31 +240,30 @@
                     $this->setNome($values['nome']);
                     $this->setLogin($values['login']);
                     $this->setSenha($values['senha']);
-                    $this->setAdministrador($values['tipoConta']);
+                    $this->setTipoConta($values['tipoConta']);
 
                     $_id = $this->getId();
                     $_nome = $this->getNome();
                     $_login = $this->getLogin();
                     $_senha = $this->getSenha();
-                    $_administrador = $this->getAdministrador();
+                    $_tipoConta = $this->getTipoConta();
 
                     echo "<tr>";
-                        echo "<td>$_id</td>";
                         echo "<td>$_nome</td>";
                         echo "<td>$_login</td>";
                         echo "<td>$_senha</td>";
-                        echo "<td>$_administrador</td>";
+                        echo "<td>{$this->traduzAdmin($values['tipoConta'])}</td>";
                         echo "<td>
-                                <a href='edit-usuario.php?id={$_id}'><i class='material-icons left'>edit</i>Editar</a>
-                             </td>";
-                        echo "<td>
-                                <a href='../database/usuario/delete.php?id={$_id}'><i class='material-icons left'>delete</i>Deletar</a>
-                             </td>";
+                                <a class='btn-floating btn-small waves-effect waves-light blue' href='edit-usuario.php?id={$_id}'><i class='material-icons left'>edit</i>Editar</a>
+                              </td>
+                              <td>
+                                <a class='btn-floating btn-small waves-effect waves-light red' href='../database/usuario/delete.php?id={$_id}'><i class='material-icons left'>delete</i>Deletar</a>
+                              </td>";
                     echo "</tr>";
                 }
             }
             
-            public function update($id, $nome, $login, $senha, $administrador)
+            public function update($id, $nome, $login, $senha, $tipoConta)
             {
                 $conn = $this->connect();
 
@@ -247,16 +271,16 @@
                 $this->setNome($nome);
                 $this->setLogin($login);
                 $this->setSenha($senha);
-                $this->setAdministrador($administrador);
+                $this->setTipoConta($tipoConta);
 
                 $_id = $this->getId();
                 $_nome = $this->getNome();
                 $_login = $this->getLogin();
                 $_senha = $this->getSenha();
-                $_administrador = $this->getAdministrador();
+                $_tipoConta = $this->getTipoConta();
 
                 $sql = "UPDATE usuario SET
-                id = :id, nome = :nome, login = :login, senha = :senha, administrador = :administrador
+                id = :id, nome = :nome, login = :login, senha = :senha, tipoConta = :tipoConta
                 WHERE id = :id";
 
                 $stmt = $conn->prepare($sql);
@@ -265,17 +289,17 @@
                 $stmt->bindParam(":nome", $_nome);
                 $stmt->bindParam(":login", $_login);
                 $stmt->bindParam(":senha", $_senha);
-                $stmt->bindParam(":administrador", $_administrador);
+                $stmt->bindParam(":tipoConta", $_tipoConta);
 
                 if($stmt->execute())
                 {
                     $_SESSION['sucesso'] = "Usuário atualizado com sucesso!";
-                    $destino = header("Location: ../../public/usuario.php");
+                    $destino = header("Location: ../../public/consulta-usuario.php");
                 }
                 else
                 {
                     $_SESSION['erro'] = "Erro ao atualizar!";
-                    $destino = header("Location: ../../public/usuario.php");
+                    $destino = header("Location: ../../public/consulta-usuario.php");
                 }
             }
 
@@ -294,12 +318,12 @@
                 if($stmt->execute())
                 {
                     $_SESSION['sucesso'] = "Usuário deletado com sucesso!";
-                    $destino = header("Location: ../../public/usuario.php");
+                    $destino = header("Location: ../../public/consulta-usuario.php");
                 }
                 else
                 {
                     $_SESSION['erro'] = "Erro ao deletar!";
-                    $destino = header("Location: ../../public/usuario.php");
+                    $destino = header("Location: ../../public/consulta-usuario.php");
                 }
             }
         

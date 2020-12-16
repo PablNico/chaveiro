@@ -1,6 +1,6 @@
 <?php
     require_once "../classes/autoload.php";
-
-    $read = new Endereco;
-    $read->read();
+    $optionEndereco = new Endereco;
+    $idCliente = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+    $optionEndereco->read($idCliente);
 ?>

@@ -7,6 +7,11 @@
 ?>
 <div class="row container">
     <div class="col s12">
+        <!-- Div aletar -->
+            <?php 
+                require_once "../config/alerta.inc.php";
+            ?>
+        <!-- Div form -->
         <div class="card">
             <div class="card-action">
                 <h5 class="light">Consultar Cliente</h5><hr>
@@ -17,7 +22,6 @@
                 <table class="striped responsive-table centered">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Telefone</th>

@@ -5,15 +5,27 @@
     else:
 ?>
 <div class="row container">
+   
+    
+    
     <div class="col s12">
-        <h5 class="light">Editar Usuário</h5><hr>
+    <div class="card">
+        <div class="card-action">
+            <h5 class="light">Editar Usuário</h5><hr>
+        </div>
+        <div class="card-content">
+    
         <?php 
             require_once "../classes/autoload.php";
             $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
             $editUsuario = new Usuario();
             $editUsuario->dadosDaTabela($id);
         ?>
+
+        </div>
+    </div>
     </div>
 </div>
 
 <?php endif;require_once "../config/footer.inc.php"; ?>
+

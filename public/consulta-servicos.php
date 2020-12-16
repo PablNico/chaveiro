@@ -6,6 +6,11 @@
 ?>
     <div class="row container">
         <div class="col s12">
+        <!-- Div aletar -->
+            <?php 
+                require_once "../config/alerta.inc.php";
+            ?>
+        <!-- Div form -->
             <div class="card">
                 <div class="card-action">
                     <h5 class="light">Consultar Serviços</h5>
@@ -20,11 +25,10 @@
                     <table class="responsive-table striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Categoria</th>
-                                <th>Estoque</th>
-                                <th>Valor</th>
+                                <th>Descrição</th>
+                                <th>Cliente</th>
+                                <th>Endereço</th>
+                                <th>Funcionario</th>
                                 <th colspan="3">Ações</th>
                             </tr>
                         </thead>

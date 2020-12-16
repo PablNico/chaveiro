@@ -9,6 +9,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-action">
+                <a href="consulta-cliente.php" class="btn red">Voltar</a>
                 <h5 class="light">Detalhes do cliente</h5>
             </div>
             <div class="card-content">
@@ -17,13 +18,12 @@
                 <table class="striped responsive-table centered">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Endereço</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php require_once "../database/enderecos/dadosDaTabela.php"; ?>
+                        <?php require_once "../database/enderecos/read.php"; ?>
                     </tbody>
                 </table>
 

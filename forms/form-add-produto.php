@@ -5,7 +5,7 @@
     </div>
     <div class="input-field col s12 m4 l4">
         <input type="number" name="estoque" required>
-        <label for="nome">Digite o estoque</label>
+        <label for="nome">Digite o estoque inicial</label>
     </div>
     <div class="input-field col s12 m4 l4">
         <input type="number" name="valor" step="0.10" required>
@@ -19,4 +19,6 @@
         <input type="submit" name="cadastrar" id="cadastrar" value="cadastrar" class="btn">
         <a href="produto.php" type="reset" name="limpar" class="btn red">limpar</a>
     </div>
+
+    <input type="hidden" name="pasta" value="<?=$pasta?>">
 </form>

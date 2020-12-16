@@ -7,14 +7,19 @@
     abstract class Connection
     {
         //Atributos de acesso ao banco de dados local
-        private $servDB = "mysql:host=localhost;dbname=chaveiro";
-        private $user = "root";
-        private $pass = "";
+        // private $servDB = "mysql:host=localhost;dbname=chaveiro";
+        // private $user = "root";
+        // private $pass = "";
 
         //Atributos de acesso ao banco de dados no servidor
         // private $servDB = "mysql:host=localhost:3306;dbname=chaveiro2";
         // private $user = "mog";
         // private $pass = 'P$hb7g69';
+
+        // Login sistemac
+        private $servDB = "mysql:host=localhost:3306;dbname=chaveiro2";
+        private $user = "sistemac";
+        private $pass = 'sYTR8T3jp0f#.7';
 
         // Método abstrato, só pode ser chamado em classes que herdam de Connection
         protected function connect()
